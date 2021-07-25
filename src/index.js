@@ -2,6 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {createStore} from "redux";
+import {profileReducer} from "./store/reducers/profile";
+
+
 
 ReactDOM.render(
   <React.StrictMode>

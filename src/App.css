@@ -126,3 +126,32 @@ output {
 .Mui-selected {
     box-shadow: 2px 1px 20px darkcyan;
 }
+
+.profile-form-block {
+    width: 400px;
+    min-height: 300px;
+    border: 1px solid darkcyan;
+    border-radius: 20px;
+    padding: 30px 10px 20px 10px;
+    margin-top: 40px;
+}
+
+.profile-user-title-data {
+    font-size: 20px;
+    font-variant: small-caps;
+}
+
+.profile-user-data {
+    font-size: 18px;
+}
+
+.changed-data-message {
+    margin: 30px 0;
+    width: 400px;
+    text-align: center;
+    font-size: 20px;
+    font-variant: small-caps;
+    color: darkcyan;
+    border: 1px solid darkcyan;
+    padding: 15px;
+}
