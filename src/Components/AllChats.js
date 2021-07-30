@@ -12,7 +12,7 @@ import {addChat, deleteChat} from "../store/actions/chats";
 
 import {
     useRouteMatch,
-    useParams, NavLink,
+    useParams, NavLink, Redirect,
 } from 'react-router-dom';
 import ClosePopup from "../img/close.svg";
 import {ButtonBase, createStyles, Fab} from "@material-ui/core";
@@ -21,6 +21,7 @@ import Form from "./Form";
 import Popup from "./Popup";
 import {getChatsList} from "../store/selectors/chats";
 import classNames from "classnames";
+import {addMessage, deleteMessage} from "../store/actions/messages";
 
 
 const useStyles = makeStyles((theme) => createStyles({
@@ -94,6 +95,8 @@ function AllChats() {
     }
     const deleteUserFromChatList = (chat) => {
         dispatch(deleteChat(chat))
+        dispatch(deleteMessage(chat))
+
     }
 
     React.useEffect(() => {
@@ -101,7 +104,7 @@ function AllChats() {
 
         if (params.id && !isChatExists)
             addUserShow()
-        else  if (params.id && isChatExists)
+        else if (params.id && isChatExists)
             setAuthor(chatsList.find(item => item.id === params.id).name)
 
 
@@ -129,6 +132,7 @@ function AllChats() {
                                                 style={{width: "20px", alignSelf: "flex-end"}}
                                                 onClick={() => {
                                                     deleteUserFromChatList(item.id)
+
                                                 }}>
                                                 <img src={ClosePopup} alt="" style={{width: "30px", height: "30px"}}/>
                                             </ButtonBase>

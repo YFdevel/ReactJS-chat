@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {getMessageList} from "../store/selectors/messages";
+import {getChatsList} from "../store/selectors/chats";
 
 
 const useStyles = makeStyles((theme) => createStyles({
@@ -22,41 +23,46 @@ const useStyles = makeStyles((theme) => createStyles({
 
 export default function Messages(props) {
     const classes = useStyles();
-    const params = useParams();
-    const {messageList} = useSelector(getMessageList, shallowEqual);
+    const params = useParams()
+    const messageList = useSelector(getMessageList, shallowEqual);
+    const chatsList = useSelector(getChatsList, shallowEqual);
     const dispatch = useDispatch();
+
+    React.useEffect(() => {
+
+    }, [chatsList])
+
 
     return (
         <React.Fragment>
 
 
+            <div className="message-wrapper">
+                {
 
-                <div className="message-wrapper" >
-                    {
-                        messageList.map((item) => {
-                            if (item.id === params.id)
-                                return (
-                                    <React.Fragment>
-                                        <div className="show-block" key={item.id}>
-                                            <output className="show-text">
-                                                <span className={classes.inline}>Сообщение:</span>
-                                                {item.text}
-                                            </output>
-                                            <output className="show-text">
-                                                <span className={classes.inline}>Автор:</span>
-                                                {item.author}
-                                            </output>
+                    (params.id && messageList[params.id]) ? messageList[params.id].map((item) => {
 
-                                        </div>
+                            return (
+                                <React.Fragment>
+                                    <div className="show-block" key={item.id}>
+                                        <output className="show-text">
+                                            <span className={classes.inline}>Сообщение:</span>
+                                            {item.text}
+                                        </output>
+                                        <output className="show-text">
+                                            <span className={classes.inline}>Автор:</span>
+                                            {item.author}
+                                        </output>
+                                        {item.id}
+                                    </div>
 
-                                    </React.Fragment>
-                                )
+                                </React.Fragment>
+                            )
 
-                        })
-                    }
-                </div>
-
-
+                        }
+                    ) : null
+                }
+            </div>
 
 
         </React.Fragment>

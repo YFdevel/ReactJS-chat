@@ -1,12 +1,13 @@
 import {ADD_MESSAGE} from "../actions/messages";
+import {DELETE_MESSAGE} from "../actions/messages";
 
 const initialState = {
-    messageList: [{id: "anonim", author: "Sergey", text: "Hello from Sergey"},
-        {id: "hulk", author: "Tom", text: "Hello from Tom"},
-        {id: "digger", author: "Yuriy", text: "Hello from Yuriy"},
-        {id: "driver", author: "Jim", text: "Hello from Jim"},
-        {id: "chopper", author: "Peter", text: "Hello from Peter"}
-    ]
+
+    anonim: [{id: "", author: "Sergey", text: "Hello from Sergey"}],
+    hulk: [{id: "", author: "Tom", text: "Hello from Tom"}],
+    digger: [{id: "", author: "Yuriy", text: "Hello from Yuriy"}],
+    driver: [{id: "", author: "Jim", text: "Hello from Jim"}],
+    chopper: [{id: "", author: "Peter", text: "Hello from Peter"}]
 
 }
 const messagesReducer = (state = initialState, action) => {
@@ -14,14 +15,17 @@ const messagesReducer = (state = initialState, action) => {
         case ADD_MESSAGE:
 
             return {
-                ...state, messageList: [...state.messageList,
-                    {
-                        id: action.payload.chatId,
-                        author: action.payload.author,
-                        text: action.payload.text
-
-                    }]
+                ...state,
+                [action.payload.chatId]:
+                    [...(state[action.payload.chatId] || []), action.payload.message]
             }
+        case DELETE_MESSAGE:
+            delete state[action.payload.chatId]
+            return {
+                ...state
+
+            }
+
         default:
             return state;
     }

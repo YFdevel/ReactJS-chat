@@ -22,7 +22,7 @@ export default function Form(props) {
     const {messageList} = useSelector(getMessageList, shallowEqual);
     const dispatch = useDispatch();
     const classes = useStyles();
-    console.log(props.author)
+
     const changeText = (event) => {
         setMessageText(event.target.value)
     }
@@ -30,7 +30,8 @@ export default function Form(props) {
         event.preventDefault()
         props.inputTextRef.current?.focus();
          if (props.author && props.isChatExists) {
-            dispatch(addMessage(props.params.id, messageText, props.author))
+            // dispatch(addMessage(props.params.id, messageText, props.author))
+             dispatch(addMessage(props.params.id, messageText, props.author))
             event.target.reset()
          }
 
