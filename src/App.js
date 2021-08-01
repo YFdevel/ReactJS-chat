@@ -6,6 +6,8 @@ import './App.css';
 import Router from "./Components/Router";
 import {Provider} from "react-redux";
 import {store} from "./store/store";
+import {persistor} from "./store/store"
+import {PersistGate} from "redux-persist/integration/react";
 
 
 function App() {
@@ -29,13 +31,16 @@ function App() {
 
     return (
         <Provider store={store}>
-        <ThemeProvider theme={theme}>
-            <div className="App">
-                <div className="block-info">
-                    <Router/>
-                </div>
-            </div>
-        </ThemeProvider>
+            <PersistGate persistor={persistor} loading={<div>Loading....</div>}>
+
+                <ThemeProvider theme={theme}>
+                    <div className="App">
+                        <div className="block-info">
+                            <Router/>
+                        </div>
+                    </div>
+                </ThemeProvider>
+            </PersistGate>
         </Provider>
     );
 }

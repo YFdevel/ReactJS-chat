@@ -1,20 +1,13 @@
 import React from "react";
 import "../App.css";
 import ClosePopup from "../img/close.svg";
-import {ButtonBase, createStyles, FormLabel, Input, makeStyles} from "@material-ui/core";
+import {ButtonBase, FormLabel, Input} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import classNames from "classnames";
+import {useStyles} from "../ThemeStyles";
 
 
-const useStyles = makeStyles((theme) => createStyles({
-    root: {
-        background: theme.palette.primary.background
-    },
-    secondary: {
-        background: theme.palette.secondary.background
-    }
 
-}));
 
 
 export default function Popup(props) {
@@ -40,7 +33,7 @@ export default function Popup(props) {
                 >
 
                     <Input
-                        className={classNames(classes.root, "my-Input")}
+                        className={classNames(classes.primary, "my-Input")}
                         placeholder="Введите ваше никнейм"
                         required={true}
                         onChange={props.changePopupNickName}
@@ -48,7 +41,7 @@ export default function Popup(props) {
 
                     />
                     <Input
-                        className={classNames(classes.root, "my-Input")}
+                        className={classNames(classes.primary, "my-Input")}
                         placeholder="Введите ваше имя"
                         required={true}
                         onChange={props.changePopupName}
@@ -58,7 +51,7 @@ export default function Popup(props) {
                     <Button
                         type="submit"
                         variant="contained"
-                        className={classNames(classes.root, "my-Button-popup")}
+                        className={classNames(classes.primary, "my-Button-popup")}
                     >
                         Отправить
                     </Button>

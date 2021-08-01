@@ -2,13 +2,6 @@ import {ADD_MESSAGE} from "../actions/messages";
 import {DELETE_MESSAGE} from "../actions/messages";
 
 const initialState = {
-
-    anonim: [{id: "", author: "Sergey", text: "Hello from Sergey"}],
-    hulk: [{id: "", author: "Tom", text: "Hello from Tom"}],
-    digger: [{id: "", author: "Yuriy", text: "Hello from Yuriy"}],
-    driver: [{id: "", author: "Jim", text: "Hello from Jim"}],
-    chopper: [{id: "", author: "Peter", text: "Hello from Peter"}]
-
 }
 const messagesReducer = (state = initialState, action) => {
     switch (action.type) {

@@ -5,9 +5,9 @@ import {
     Route,
     NavLink
 } from 'react-router-dom';
-import Profile from "./Profile";
 import Main from "./Main";
-import AllChats from "./AllChats";
+import ProfileContainer from "./ProfileContainer";
+import AllChatsContainer from "./AllChatsContainer";
 
 
 
@@ -35,13 +35,13 @@ function Router() {
             </header>
             <Switch>
                 <Route exact path="/profile">
-                    <Profile/>
+                    <ProfileContainer/>
                 </Route>
                 <Route exact path="/chats">
-                    <AllChats/>
+                    <AllChatsContainer/>
                 </Route>
                 <Route exact path="/chats/:id">
-                   <AllChats/>
+                   <AllChatsContainer/>
                 </Route>
                 <Route exact path="/">
                     <Main/>
