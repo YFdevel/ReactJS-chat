@@ -28,7 +28,11 @@ export const addMessageWithThunk = ((chatId, message, author) => (dispatch, getS
     dispatch(addMessage(chatId, message, author));
     if (author !== "Бот") {
         const botMessage = `Привет, ${author}`;
-        setTimeout(() => dispatch(addMessage(chatId, botMessage, "Бот")), 2000);
+       const timer= setTimeout(() => {
+           dispatch(addMessage(chatId, botMessage, "Бот"))
+           clearTimeout(timer)
+           },
+           2000);
     }
 }
 )

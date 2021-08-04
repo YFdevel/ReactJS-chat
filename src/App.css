@@ -219,3 +219,40 @@ output {
     min-height: 50px;
 }
 
+.news-list {
+    width: 100%;
+    padding: 10px 30px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(5,fit-content(20%));
+    grid-gap: 10px;
+
+}
+
+.news-list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    min-height: auto;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+.item-news {
+    display: block;
+    width: 100%;
+    min-height: auto;
+    margin-bottom: 10px;
+}
+.main{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    align-items: center;
+    padding-top: 100px;
+}
+.main-header{
+    font-size: 9em;
+    color: darkslateblue;
+}

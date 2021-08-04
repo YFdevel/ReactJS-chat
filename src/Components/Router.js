@@ -11,6 +11,7 @@ import AllChatsContainer from "./AllChatsContainer";
 
 
 
+
 function Router() {
 
 
@@ -30,7 +31,6 @@ function Router() {
                         <NavLink to="/chats" activeStyle={{color: "red", fontSize: "24px", fontWeight: "700"}}
                                  className="link">Чаты</NavLink>
                     </li>
-
                 </ul>
             </header>
             <Switch>
@@ -43,6 +43,7 @@ function Router() {
                 <Route exact path="/chats/:id">
                    <AllChatsContainer/>
                 </Route>
+
                 <Route exact path="/">
                     <Main/>
                 </Route>

@@ -24,7 +24,7 @@ export default function Popup(props) {
                 <div style={{display: "flex", justifyContent: "space-between"}}>
                     <FormLabel style={{color: "darkblue", fontVariant: "small-caps"}}>Новый пользователь</FormLabel>
                     <ButtonBase onClick={props.closePopup} style={{width: "20px", alignSelf: "flex-end"}}>
-                        <img src={ClosePopup} style={{width: "30px", height: "30px"}}/>
+                        <img src={ClosePopup} alt="" style={{width: "30px", height: "30px"}}/>
                     </ButtonBase></div>
 
                 <form style={{display: "flex", flexDirection: "column", padding: "10px"}}

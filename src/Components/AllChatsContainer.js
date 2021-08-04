@@ -8,12 +8,12 @@ import {
 } from 'react-router-dom';
 import {ButtonBase, Fab} from "@material-ui/core";
 import Messages from "./Messages";
-import Form from "./Form";
 import Popup from "./Popup";
 import {getChatsList} from "../store/selectors/chats";
 import {deleteMessage} from "../store/actions/messages";
 import AllChats from "./AllChats";
 import {useStyles} from "../ThemeStyles";
+import FormContainer from "./FormContainer";
 
 
 
@@ -83,7 +83,7 @@ function AllChatsContainer() {
             setAuthor(chatsList.find(item => item.id === params.id).name)
 
 
-    }, []);
+    }, [params.id,isChatExists,chatsList]);
 
 
     return (
@@ -111,7 +111,7 @@ function AllChatsContainer() {
                     <div className="messages-form">
 
                         <Messages params={params} author={author}/>
-                        <Form params={params} author={author} inputTextRef={inputTextRef}
+                        <FormContainer params={params} author={author} inputTextRef={inputTextRef}
                               isChatExists={isChatExists}/>
                     </div>
                 </div>
