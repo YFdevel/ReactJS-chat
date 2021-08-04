@@ -8,7 +8,7 @@ import {
 import Main from "./Main";
 import ProfileContainer from "./ProfileContainer";
 import AllChatsContainer from "./AllChatsContainer";
-
+import {News} from "./News";
 
 
 
@@ -31,6 +31,10 @@ function Router() {
                         <NavLink to="/chats" activeStyle={{color: "red", fontSize: "24px", fontWeight: "700"}}
                                  className="link">Чаты</NavLink>
                     </li>
+                    <li className="header__list-item">
+                        <NavLink to="/news" activeStyle={{color: "red", fontSize: "24px", fontWeight: "700"}}
+                                 className="link">Новости</NavLink>
+                    </li>
                 </ul>
             </header>
             <Switch>
@@ -43,7 +47,9 @@ function Router() {
                 <Route exact path="/chats/:id">
                    <AllChatsContainer/>
                 </Route>
-
+                <Route exact path="/news">
+                    <News/>
+                </Route>
                 <Route exact path="/">
                     <Main/>
                 </Route>

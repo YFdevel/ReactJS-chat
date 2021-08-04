@@ -28,6 +28,12 @@ export const useStyles = makeStyles((theme) => createStyles({
         color: "red",
         fontSize: "1.2em"
     },
+    buttonNews: {
+        padding: "5px 30px",
+        color: "darkblue",
+        borderRadius: "20px",
+        background: theme.palette.secondary.background
+    }
 
 }));
 
