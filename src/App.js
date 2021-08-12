@@ -4,14 +4,11 @@ import {
 } from "@material-ui/core/styles";
 import './App.css';
 import Router from "./Components/Router";
-import {Provider} from "react-redux";
-import {store} from "./store/store";
-import {persistor} from "./store/store"
-import {PersistGate} from "redux-persist/integration/react";
 
 
-function App() {
 
+
+export function App() {
 
     const theme = createTheme({
         palette: {
@@ -30,8 +27,6 @@ function App() {
 
 
     return (
-        <Provider store={store}>
-            <PersistGate persistor={persistor} loading={<div>Loading....</div>}>
 
                 <ThemeProvider theme={theme}>
                     <div className="App">
@@ -40,8 +35,7 @@ function App() {
                         </div>
                     </div>
                 </ThemeProvider>
-            </PersistGate>
-        </Provider>
+
     );
 }
 

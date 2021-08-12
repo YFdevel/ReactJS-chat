@@ -12,69 +12,91 @@ import {NavLink} from 'react-router-dom';
 import ClosePopup from "../img/close.svg";
 import {ButtonBase} from "@material-ui/core";
 import classNames from "classnames";
+import {useDispatch} from "react-redux";
+import {onSubscribeToChatsChanges, preloadChatsWithThunk} from "../store/actions/chats";
 
 
 function AllChats(props) {
 
+    const dispatch = useDispatch()
+
+    React.useEffect(() => {
+        dispatch(preloadChatsWithThunk())
+        dispatch(onSubscribeToChatsChanges())
+
+    }, [])
+
+
     return (
 
-        <List className=
-                  {
-                      classNames(props.classes.rootAllChats, "my-List")}
-        >
+        <List className={classNames(props.classes.rootAllChats, "my-List")}>
 
-            {props.chatsList.map(function (item) {
-                    return (
-                        <div className="chat-unit"
-                             key={item.id}
-                        >
-                            <div className="chat-item"
-                                 onClick={(event) => {
-                                     props.chooseAuthor(item, event)
-                                 }}>
+            {
 
-                                <ButtonBase
-                                    style={{width: "20px", alignSelf: "flex-end"}}
-                                    onClick={() => {
-                                        props.deleteUserFromChatList(item.id)
+                (props.chatsList)?
+                        props.chatsList.map(function (item1,index) {
+                        return <React.Fragment key={index}>
 
-                                    }}>
-                                    <img src={ClosePopup} alt="" style={{width: "30px", height: "30px"}}/>
-                                </ButtonBase>
+                            {Object.values(item1).map((item2) => {
+                                return (
+                                    <div className="chat-unit"
 
-                                <ListItemAvatar>
-                                    <Avatar/>
-                                </ListItemAvatar>
+                                         key={item2.id}>
+
+                                        <div className="chat-item"
+                                             onClick={(event) => {
+                                                 props.chooseAuthor(item2, event)
+
+                                             }}>
+
+                                            <ButtonBase
+                                                style={{width: "20px", alignSelf: "flex-end"}}
+                                                onClick={() => {
+                                                    props.deleteUserFromChatList(item2.id)
+
+                                                }}>
+                                                <img src={ClosePopup} alt="" style={{width: "30px", height: "30px"}}/>
+                                            </ButtonBase>
+
+                                            <ListItemAvatar>
+                                                <Avatar/>
+                                            </ListItemAvatar>
 
 
-                                <ListItem alignItems="flex-start" selected={item.id === props.params.id}
-                                          name={item.name} style={{height: "100%"}}>
-                                    <NavLink
-                                        to={props.match.url === "/chats/" ? `${props.match.url}${item.id}` : `${props.match.url}/${item.id}`}
-                                        style={{height: "100%", width: "100%"}}>
+                                            <ListItem alignItems="flex-start" selected={item2.id === props.params.id}
+                                                      name={item2.name} style={{height: "100%"}}>
+                                                <NavLink
+                                                    to={props.match.url === "/chats/" ? `${props.match.url}${item2.id}` : `${props.match.url}/${item2.id}`}
+                                                    style={{height: "100%", width: "100%"}}>
 
-                                        <ListItemText
-                                            primary={
-                                                <Typography
-                                                    component="span"
-                                                    variant="body2"
-                                                    className={props.classes.inline}
-                                                    color="textPrimary">
-                                                    {item.name}
-                                                </Typography>
-                                            }
-                                            secondary={
-                                                "I'm online…"
-                                            }
-                                        />
-                                    </NavLink>
+                                                    <ListItemText
+                                                        primary={
+                                                            <Typography
+                                                                component="span"
+                                                                variant="body2"
+                                                                className={props.classes.inline}
+                                                                color="textPrimary">
+                                                                {item2.name}
+                                                            </Typography>
+                                                        }
+                                                        secondary={
+                                                            "I'm online…"
+                                                        }
+                                                    />
+                                                </NavLink>
 
-                                </ListItem></div>
-                            <Divider variant="inset" component="li"/>
-                        </div>
-                    )
-                }
-            )
+                                            </ListItem>
+                                        </div>
+                                        <Divider variant="inset" component="li"/>
+                                    </div>
+                                )
+                            })
+                            }
+
+                        </React.Fragment>
+                    }
+                ):null
+
             }
 
         </List>

@@ -1,47 +1,39 @@
-import {ADD_CHAT, CHANGE_ID, CHANGE_NAME, DELETE_CHAT} from "../actions/chats";
+import {ADD_CHAT, DELETE_CHAT, INITIAL_LOAD_CHATS} from "../actions/chats";
 
 
-const initialState = {
-    chatsList: [{id: "anonim", name: "Sergey"},
-        {id: "hulk", name: "Tom"},
-        {id: "digger", name: "Yuriy"},
-        {id: "driver", name: "Jim"},
-        {id: "chopper", name: "Peter"}]
-};
+const initialState = {};
 
 const chatsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case CHANGE_ID:
-            return {
-                ...state,
-                id: action.payload.id
 
-            }
-        case CHANGE_NAME:
-            return {
-                ...state,
-                name: action.payload.name
 
-            }
         case ADD_CHAT:
             return {
-                ...state, chatsList: [...state.chatsList,
-                    {
-                        id: action.payload.id,
-                        name: action.payload.name
-
-
-                    }]
+                ...state,
+                chatsList: [...(state.chatsList||[]), action.payload.chat]
             }
+
+
         case DELETE_CHAT:
 
-            return{
-                chatsList:state.chatsList.filter((item)=>item.id!==action.payload.id)
-            }
+           let arr= state.chatsList.map((item) =>
+                Object.values(item).filter((item2) => item2.id !== action.payload.chatId))
+            return {
+                chatsList: arr.filter(item=>item.length!==0)
 
-        default:
-            return state
-    }
+}
+
+
+case
+    INITIAL_LOAD_CHATS:
+        return {
+            ...state,
+            chatsList: action.payload.chatsList
+        }
+
+default:
+    return state
+}
 }
 
 export default chatsReducer;

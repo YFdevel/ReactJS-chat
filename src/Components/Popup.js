@@ -7,9 +7,6 @@ import classNames from "classnames";
 import {useStyles} from "../ThemeStyles";
 
 
-
-
-
 export default function Popup(props) {
 
 
@@ -19,7 +16,7 @@ export default function Popup(props) {
         <React.Fragment>
 
 
-            <div className="popup" ref={props.popupRef}>
+            <div className="popup" ref={props.popupRef} style={{display:props.isShowPopup?"block":"none"}}>
 
                 <div style={{display: "flex", justifyContent: "space-between"}}>
                     <FormLabel style={{color: "darkblue", fontVariant: "small-caps"}}>Новый пользователь</FormLabel>

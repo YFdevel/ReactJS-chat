@@ -1,3 +1,5 @@
+import firebase from "firebase";
+
 export const CHANGE_NAME = "PROFILE::CHANGE_NAME";
 export const CHANGE_LAST_NAME = "PROFILE::CHANGE_LAST_NAME";
 export const CHANGE_AGE = "PROFILE::CHANGE_AGE";
@@ -14,6 +16,16 @@ export const changeName = (name) => {
     }
 
 }
+
+export const changeNameWithFirebase = (name) => (dispatch, getState) => {
+    const db = firebase.database();
+    const profile = db.ref("profile");
+
+    profile.child("currentUser").child("name").set(name).catch((error) => {
+        console.log(error.message)
+    })
+
+}
 export const changeLastName = (lastName) => {
     return {
         type: CHANGE_LAST_NAME,
@@ -22,6 +34,16 @@ export const changeLastName = (lastName) => {
         }
 
     }
+
+}
+export const changeLastNameWithFirebase = (lastName) => (dispatch, getState) => {
+    const db = firebase.database();
+    const profile = db.ref("profile");
+
+
+    profile.child("currentUser").child("lastName").set(lastName).catch((error) => {
+        console.log(error.message)
+    })
 
 }
 export const changeAge = (age) => {
@@ -34,6 +56,17 @@ export const changeAge = (age) => {
     }
 
 }
+
+export const changeAgeWithFirebase = (age) => (dispatch, getState) => {
+    const db = firebase.database();
+    const profile = db.ref("profile");
+
+    profile.child("currentUser").child("age").set(age).catch((error) => {
+        console.log(error.message)
+    })
+
+}
+
 export const showChangeDataMessage = () => {
 
     return {
@@ -52,3 +85,28 @@ export const showFieldName = () => {
     }
 
 }
+
+
+export const onSubscribeChangeProfileData = () => (dispatch, getState) => {
+
+    const db = firebase.database();
+    const profile = db.ref("profile");
+
+
+    profile.child("currentUser").once("child_added", (snapshot) => {
+        if (snapshot.key === "age") dispatch(changeAge(snapshot.val()))
+        if (snapshot.key === "lastName") dispatch(changeLastName(snapshot.val()))
+        if (snapshot.key === "name") dispatch(changeName(snapshot.val()))
+    }).catch((error) => {
+            console.log(error.message)
+        })
+
+    profile.child("currentUser").once("child_changed", (snapshot) => {
+        if (snapshot.key === "age") dispatch(changeAge(snapshot.val()))
+        if (snapshot.key === "lastName") dispatch(changeLastName(snapshot.val()))
+        if (snapshot.key === "name") dispatch(changeName(snapshot.val()))
+    }).catch((error) => {
+        console.log(error.message)
+    })
+}
+
