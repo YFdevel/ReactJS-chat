@@ -1,4 +1,5 @@
-import firebase from "firebase";
+
+import {db} from "../../App";
 
 
 export const ADD_MESSAGE = 'MESSAGES::ADD_MESSAGE';
@@ -27,8 +28,7 @@ export const initialDownloadMessages = (chatId,messages) => {
         }
     }
 }
-export const preloadMessages = (chat) => (dispatch, getState) => {
-    const db = firebase.database();
+export const preloadMessages = (chat) => (dispatch) => {
     let messages = []
     const chatId = chat
 
@@ -37,12 +37,12 @@ export const preloadMessages = (chat) => (dispatch, getState) => {
 
             snapshot.forEach((snap) => {
                     messages.push(snap.val());
-                   //dispatch(initialDownloadMessages(chatId,messages))
                 }
             )
-                dispatch(initialDownloadMessages(chatId,messages))
+            if(messages.length!==0){
+                dispatch(initialDownloadMessages(chatId,messages))}
         }
-    )
+    ).catch(error=>error.message)
 }
 
 
@@ -55,9 +55,8 @@ export const deleteMessage = (chatId) => ({
 
 });
 
-export const addMessageWithThunk = ((chatId, message, authorMe, authorBot) => (dispatch, getState) => {
-    const chat=chatId
-    const db = firebase.database();
+export const addMessageWithThunk = ((chatId, message, authorMe, authorBot) => (dispatch) => {
+
         const mes = db.ref("messages");
         mes.child(chatId).push({
             id: `${chatId}-${new Date().getMilliseconds()}`,
@@ -81,19 +80,15 @@ export const addMessageWithThunk = ((chatId, message, authorMe, authorBot) => (d
 
 );
 
-export const onSubscribeChangeUser = (chatId) => (dispatch, getState) => {
+export const onSubscribeChangeUser = (chatId) => (dispatch) => {
 const chat=chatId;
 
-    const db = firebase.database();
     const messages = db.ref("messages");
 
 
     messages.child(`${chat}`).once("child_added", (snapshot) => {
          dispatch(addMessage(chat, snapshot.val()))
-    }).catch((error)=>{
-        console.log(error.message)
-    })
-
+    }).catch((error)=> error.message)
 
 }
 

@@ -40,7 +40,7 @@ export const News = () => {
             news.map((item) =>
             <ListItem key={item.id} className="news-list-item">
             <h3 className="item-news">{item.title || 'No title'}</h3>
-                <div className="item-news"><img src={item.imageUrl} alt="loading" style={{width:"100%"}}/></div>
+                <div className="item-news"><img src={item.imageUrl} alt="loading"/></div>
                 <Link href={item.url} className="item-news">Перейти</Link>
         </ListItem>
         )}

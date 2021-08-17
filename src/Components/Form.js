@@ -8,7 +8,7 @@ export default function Form(props) {
 
     return (
 
-        <React.Fragment>
+
 
             <form className="form"
                   onSubmit={props.handleOnSubmitForm}
@@ -39,7 +39,7 @@ export default function Form(props) {
 
             </form>
 
-        </React.Fragment>
+
 
     );
 }

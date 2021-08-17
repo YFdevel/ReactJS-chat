@@ -1,11 +1,16 @@
-App {
-    margin: 0 auto;
-    padding: 0 20px;
+* {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    width: 100%;
 }
 
 .header {
     min-height: 50px;
-    padding: 10px 0;
+    padding: 20px 10px;
+    width: 100%;
     background: darkcyan;
     box-sizing: border-box;
 
@@ -15,20 +20,17 @@ App {
     list-style-type: none;
     display: flex;
     width: 100%;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
 .link {
     text-decoration: none;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     color: white;
     margin-right: 20px;
 }
 
-.link:active {
-    color: red;
-}
 
 .form {
     display: flex;
@@ -100,7 +102,6 @@ output {
 
 .block-info {
     width: 100%;
-    padding: 10px;
     box-sizing: border-box;
     position: relative;
     min-height: 900px;
@@ -111,11 +112,6 @@ output {
     height: 30%;
     position: sticky;
     margin-top: 40px;
-}
-
-.outer {
-    width: 100%;
-    box-sizing: border-box;
 }
 
 .form-pair {
@@ -138,6 +134,10 @@ output {
 
 .Mui-selected {
     box-shadow: 2px 1px 20px darkcyan;
+}
+
+.profile {
+    padding: 40px;
 }
 
 .profile-form-block {
@@ -178,6 +178,8 @@ output {
     width: 70%;
     padding: 20px;
     margin-left: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .message-wrapper {
@@ -219,6 +221,21 @@ output {
     min-height: 50px;
 }
 
+.my-button-theme {
+    width: 100px;
+    padding: 2px 5px;
+    border-radius: 10px;
+    outline: none;
+    background: lemonchiffon;
+    position: relative;
+    bottom: 0;
+    left: 0;
+}
+
+.my-list-item {
+    height: 100%;
+}
+
 .news-list {
     width: 100%;
     padding: 10px 30px;
@@ -255,8 +272,8 @@ output {
     padding-top: 100px;
 }
 
-.main-header {
-    font-size: 9em;
+.main-heading {
+    font-size: 8em;
     color: darkslateblue;
 }
 
@@ -297,3 +314,81 @@ output {
     left: 10px;
 }
 
+.img-close {
+    width: 30px;
+    height: 30px;
+}
+
+.btn-close {
+    width: 20px;
+    align-self: flex-end;
+}
+
+.popup-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-popup {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.my-fab-btn {
+    font-size: 20px;
+    align-self: flex-end;
+    justify-self: center;
+}
+
+.page-not-found {
+    text-align: center;
+    font-size: 40px;
+}
+
+@media screen and (max-width: 767px) {
+
+    .main-heading {
+        font-size: 3em;
+    }
+
+    .form-pair {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .my-textarea {
+        min-height: 20px;
+        width: 100%;
+    }
+
+    .header__links {
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: flex-start;
+    }
+
+    .link {
+        font-size: 16px;
+        margin-right: 10px;
+    }
+
+    .profile-form-block {
+        width: 90%;
+    }
+
+    .registration-block {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .popup {
+        width: 80%;
+        top: 15%;
+        left: 5%;
+    }
+
+    .profile {
+        padding: 10px;
+    }
+}

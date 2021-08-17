@@ -43,24 +43,24 @@ function Router() {
             <header className="header">
                 <ul className="header__links">
                     <li className="header__links-item">
-                        <NavLink exact to="/" activeStyle={{color: "red", fontSize: "24px", fontWeight: "700"}}
+                        <NavLink exact to="/" activeStyle={{color: "red", fontSize: "18px", fontWeight: "700"}}
                                  className="link">Главная</NavLink>
 
-                        <NavLink to="/profile" activeStyle={{color: "red", fontSize: "24px", fontWeight: "700"}}
+                        <NavLink to="/profile" activeStyle={{color: "red", fontSize: "18px", fontWeight: "700"}}
                                  className="link">Профиль</NavLink>
 
-                        <NavLink to="/chats" activeStyle={{color: "red", fontSize: "24px", fontWeight: "700"}}
+                        <NavLink to="/chats" activeStyle={{color: "red", fontSize: "18px", fontWeight: "700"}}
                                  className="link">Чаты</NavLink>
 
-                        <NavLink to="/news" activeStyle={{color: "red", fontSize: "24px", fontWeight: "700"}}
+                        <NavLink to="/news" activeStyle={{color: "red", fontSize: "18px", fontWeight: "700"}}
                                  className="link">Новости</NavLink>
                     </li>
                     <li className="header__list-item sign-in">
                         {!authed &&
-                        <NavLink to="/registration" activeStyle={{color: "red", fontSize: "24px", fontWeight: "700"}}
+                        <NavLink to="/registration" activeStyle={{color: "red", fontSize: "18px", fontWeight: "700"}}
                                  className="link">Регистрация</NavLink>}
                         {!authed &&
-                        <NavLink to="/login" activeStyle={{color: "red", fontSize: "24px", fontWeight: "700"}}
+                        <NavLink to="/login" activeStyle={{color: "red", fontSize: "18px", fontWeight: "700"}}
                                  className="link">Вход</NavLink>}
                         {authed && <button className="logout-btn" onClick={logout}>Выйти</button>}
                     </li>
@@ -90,7 +90,7 @@ function Router() {
                 </PrivateRoute>
 
                 <Route>
-                    <h2 style={{textAlign: "center", fontSize: "40px"}}>404: Page not found</h2>
+                    <h2 className="page-not-found">404: Page not found</h2>
                 </Route>
 
             </Switch>
