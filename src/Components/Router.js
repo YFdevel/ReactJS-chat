@@ -5,9 +5,10 @@ import {
     Route,
     NavLink
 } from 'react-router-dom';
-import Profile from "./Profile";
 import Main from "./Main";
-import AllChats from "./AllChats";
+import ProfileContainer from "./ProfileContainer";
+import AllChatsContainer from "./AllChatsContainer";
+
 
 
 
@@ -30,19 +31,19 @@ function Router() {
                         <NavLink to="/chats" activeStyle={{color: "red", fontSize: "24px", fontWeight: "700"}}
                                  className="link">Чаты</NavLink>
                     </li>
-
                 </ul>
             </header>
             <Switch>
                 <Route exact path="/profile">
-                    <Profile/>
+                    <ProfileContainer/>
                 </Route>
                 <Route exact path="/chats">
-                    <AllChats/>
+                    <AllChatsContainer/>
                 </Route>
                 <Route exact path="/chats/:id">
-                   <AllChats/>
+                   <AllChatsContainer/>
                 </Route>
+
                 <Route exact path="/">
                     <Main/>
                 </Route>

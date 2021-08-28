@@ -1,3 +1,4 @@
+
 export const ADD_MESSAGE = 'MESSAGES::ADD_MESSAGE';
 export const DELETE_MESSAGE = 'MESSAGES::DELETE_MESSAGE';
 export const addMessage = (chatId, message, author) => ({
@@ -21,3 +22,18 @@ export const deleteMessage = (chatId) => ({
     }
 
 });
+
+
+export const addMessageWithThunk = ((chatId, message, author) => (dispatch, getState) => {
+    dispatch(addMessage(chatId, message, author));
+    if (author !== "Бот") {
+        const botMessage = `Привет, ${author}`;
+       const timer= setTimeout(() => {
+           dispatch(addMessage(chatId, botMessage, "Бот"))
+           clearTimeout(timer)
+           },
+           2000);
+    }
+}
+)
+
