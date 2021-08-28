@@ -13,18 +13,16 @@ export default function Popup(props) {
     const classes = useStyles();
     return (
 
-        <React.Fragment>
 
+            <div className="popup"  style={{display:props.isShowPopup?"block":"none"}}>
 
-            <div className="popup" ref={props.popupRef} style={{display:props.isShowPopup?"block":"none"}}>
-
-                <div style={{display: "flex", justifyContent: "space-between"}}>
-                    <FormLabel style={{color: "darkblue", fontVariant: "small-caps"}}>Новый пользователь</FormLabel>
-                    <ButtonBase onClick={props.closePopup} style={{width: "20px", alignSelf: "flex-end"}}>
-                        <img src={ClosePopup} alt="" style={{width: "30px", height: "30px"}}/>
+                <div className="popup-wrapper">
+                    <FormLabel>Новый пользователь</FormLabel>
+                    <ButtonBase onClick={props.closePopup} className="btn-close">
+                        <img src={ClosePopup} alt="close" className="img-close"/>
                     </ButtonBase></div>
 
-                <form style={{display: "flex", flexDirection: "column", padding: "10px"}}
+                <form className="form-popup"
                       onSubmit={props.addNewUserToChatList}
 
                 >
@@ -56,7 +54,7 @@ export default function Popup(props) {
                 </form>
             </div>
 
-        </React.Fragment>
+
 
     );
 }

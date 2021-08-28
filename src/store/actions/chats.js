@@ -1,5 +1,5 @@
 
-import firebase from "firebase";
+import {db} from "../../App";
 
 export const ADD_CHAT = "CHATS::ADD_CHAT";
 export const DELETE_CHAT = "CHATS::DELETE_CHAT";
@@ -41,7 +41,6 @@ export const deleteChat = (chatId) => {
 
 export const addChatsWithThunk = ((chatId, name) => (dispatch, getState) => {
 
-        const db = firebase.database();
         const chat = db.ref("chatList");
 
         chat.child(chatId).push({
@@ -53,7 +52,6 @@ export const addChatsWithThunk = ((chatId, name) => (dispatch, getState) => {
 
 );
 export const preloadChatsWithThunk = () => (dispatch, getState) => {
-    const db = firebase.database();
     const chats = [];
     const chatsDatabase = db.ref("chatList");
     chatsDatabase.get().then(
@@ -71,7 +69,6 @@ export const preloadChatsWithThunk = () => (dispatch, getState) => {
 
 export const onSubscribeToChatsChanges = () => (dispatch, getState) => {
 
-    const db = firebase.database();
     const chat = db.ref("chatList");
 
 

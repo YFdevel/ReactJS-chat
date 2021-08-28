@@ -18,13 +18,14 @@ import {onSubscribeToChatsChanges, preloadChatsWithThunk} from "../store/actions
 
 function AllChats(props) {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
 
     React.useEffect(() => {
         dispatch(preloadChatsWithThunk())
         dispatch(onSubscribeToChatsChanges())
 
-    }, [])
+    }, [dispatch])
 
 
     return (
@@ -47,15 +48,14 @@ function AllChats(props) {
                                              onClick={(event) => {
                                                  props.chooseAuthor(item2, event)
 
-                                             }}>
+                                             }}
+                                        >
 
-                                            <ButtonBase
-                                                style={{width: "20px", alignSelf: "flex-end"}}
+                                            <ButtonBase className="btn-close"
                                                 onClick={() => {
                                                     props.deleteUserFromChatList(item2.id)
-
                                                 }}>
-                                                <img src={ClosePopup} alt="" style={{width: "30px", height: "30px"}}/>
+                                                <img className="img-close" src={ClosePopup} alt="close" />
                                             </ButtonBase>
 
                                             <ListItemAvatar>
@@ -64,7 +64,7 @@ function AllChats(props) {
 
 
                                             <ListItem alignItems="flex-start" selected={item2.id === props.params.id}
-                                                      name={item2.name} style={{height: "100%"}}>
+                                                      name={item2.name} className="my-list-item">
                                                 <NavLink
                                                     to={props.match.url === "/chats/" ? `${props.match.url}${item2.id}` : `${props.match.url}/${item2.id}`}
                                                     style={{height: "100%", width: "100%"}}>

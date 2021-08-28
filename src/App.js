@@ -4,9 +4,10 @@ import {
 } from "@material-ui/core/styles";
 import './App.css';
 import Router from "./Components/Router";
+import firebase from "firebase";
 
 
-
+export const db = firebase.database();
 
 export function App() {
 
@@ -25,11 +26,10 @@ export function App() {
         },
     });
 
-
     return (
 
                 <ThemeProvider theme={theme}>
-                    <div className="App">
+                    <div className="app">
                         <div className="block-info">
                             <Router/>
                         </div>

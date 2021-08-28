@@ -1,8 +1,7 @@
-import React, {useRef, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {addChatsWithThunk, deleteChat} from "../store/actions/chats";
-
-import {ButtonBase, Fab} from "@material-ui/core";
+import {Fab} from "@material-ui/core";
 import Messages from "./Messages";
 import Popup from "./Popup";
 import {getChatsList} from "../store/selectors/chats";
@@ -10,9 +9,13 @@ import {deleteMessage} from "../store/actions/messages";
 import AllChats from "./AllChats";
 import {useStyles} from "../ThemeStyles";
 import FormContainer from "./FormContainer";
-import firebase from "firebase";
 import {useParams, useRouteMatch} from "react-router-dom/cjs/react-router-dom";
+import {db} from "../App";
 
+
+const PopupPure = React.memo(Popup);
+const AllChatsPure = React.memo(AllChats);
+const FormContainerPure = React.memo(FormContainer);
 
 function AllChatsContainer() {
     const [author, setAuthor] = useState(null);
@@ -20,7 +23,6 @@ function AllChatsContainer() {
     const [newUserName, setNewUserName] = useState();
     const [isChangeTheme, setIsChangeTheme] = useState(false);
     const [isShowPopup, setIsShowPopup] = useState(false);
-    const popupRef = useRef(null);
     const inputTextRef = useRef(null);
     const classes = useStyles();
     const params = useParams();
@@ -58,7 +60,6 @@ function AllChatsContainer() {
     const addNewUserToChatList = (e) => {
         e.preventDefault();
 
-        const db = firebase.database();
         const newChat = db.ref("chatList");
 
         newChat.orderByKey().equalTo(newUserNickName).limitToFirst(1).once("value", snapshot => {
@@ -74,8 +75,7 @@ function AllChatsContainer() {
         setIsShowPopup(false)
     }
 
-    const deleteUserFromChatList = (chat) => {
-        const db = firebase.database();
+    const deleteUserFromChatList = useCallback((chat) => {
         const chatDelete = db.ref("chatList");
         const messagesDelete = db.ref("messages");
 
@@ -83,53 +83,44 @@ function AllChatsContainer() {
         messagesDelete.child(chat).remove().catch((error) => error.message);
         dispatch(deleteChat(chat))
         dispatch(deleteMessage(chat))
-    }
+    },[dispatch])
 
 
 
     return (
         <React.Fragment>
+            <p>Список чатов</p>
             <div className={(isChangeTheme) ? classes.primary : classes.secondary}>
 
                 <div className="window-chats">
-                    <AllChats classes={classes} match={match} params={params}
+                    <AllChatsPure classes={classes} match={match} params={params}
                               deleteUserFromChatList={deleteUserFromChatList}
-                              chooseAuthor={chooseAuthor} chatsList={chatsList}
+                               chooseAuthor={chooseAuthor}
+                                  chatsList={chatsList}
                     />
 
-                    <Popup popupRef={popupRef}
+                    <PopupPure
                            addNewUserToChatList={addNewUserToChatList}
                            changePopupName={changePopupName}
                            changePopupNickName={changePopupNickName}
                            closePopup={closePopup} isShowPopup={isShowPopup}
                     />
-                    <Fab color="secondary" aria-label="add" style={{
-                        fontSize: "20px",
-                        position: "fixed", right: "10%", top: "40%"
-                    }}
-                         onClick={addUserShow}
-                    >+
-                    </Fab>
+
                     <div className="messages-form">
-
+                        <Fab color="secondary" aria-label="add"
+                             onClick={addUserShow} className="my-fab-btn"
+                        >+
+                        </Fab>
                         <Messages params={params} author={author}/>
-                        <FormContainer params={params} author={author} inputTextRef={inputTextRef}
 
-                        />
+                        <FormContainerPure params={params} author={author}
+                                           inputTextRef={inputTextRef}/>
                     </div>
                 </div>
             </div>
-            <ButtonBase onClick={changeTheme}
-                        style={{
-                            width: "100px",
-                            padding: "5px",
-                            background: "lemonchiffon",
-                            position: "sticky",
-                            bottom: 0,
-                            left: 0
-                        }}>
+            <button  onClick={changeTheme} className="my-button-theme">
                 Сменить тему
-            </ButtonBase>
+            </button>
         </React.Fragment>
     )
 
