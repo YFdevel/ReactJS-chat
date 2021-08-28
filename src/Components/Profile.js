@@ -1,8 +1,11 @@
 import React from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {changeAge, changeLastName, changeName, showChangeDataMessage, showFieldName} from "./store/actions/profile";
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import {changeAge, changeLastName, changeName, showChangeDataMessage, showFieldName} from "../store/actions/profile";
 import {createStyles, Input, makeStyles} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import {getProfile} from "../store/selectors/profile";
+import classNames from "classnames";
+import {useRouteMatch} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => createStyles({
     root: {
@@ -15,7 +18,7 @@ const useStyles = makeStyles((theme) => createStyles({
 }));
 
 function Profile() {
-    const {showName, name, lastName, age, changedDataMessage} = useSelector((state) => state.profile);
+    const {showName, name, lastName, age, changedDataMessage} = useSelector(getProfile,shallowEqual);
     const dispatch = useDispatch();
     const classes = useStyles();
 
@@ -67,39 +70,36 @@ function Profile() {
 
             <div className="profile-form-block">
                 <form className="form"
-                      onSubmit={handleChangeData} style={{position: "sticky", bottom: "20px"}}
+                      onSubmit={handleChangeData}
                 >
 
                     <Input
                         type="text"
-                        style={{width: "100%", height: "100%", marginBottom: "20px"}}
-                        className={classes.root}
+                        className={classNames(classes.root, "my-Input")}
                         placeholder="Введите ваше имя"
                         required={true}
                         onChange={handleChangeName}
                     />
                     <Input
                         type="text"
-                        style={{width: "100%", height: "100%", marginBottom: "20px"}}
-                        className={classes.root}
+                        className={classNames(classes.root, "my-Input")}
                         placeholder="Введите вашу фамилию"
                         required={true}
                         onChange={handleChangeLastName}
                     />
                     <Input
                         type="number"
-                        style={{width: "100%", height: "100%", marginBottom: "20px"}}
-                        className={classes.root}
+                        className={classNames(classes.root, "my-Input")}
                         placeholder="Введите ваш возраст"
                         required={true}
                         onChange={handleChangeAge}
                     />
                     <Button
                         type="submit"
-                        style={{margin: '10px 0', minHeight: "50px"}}
+                        className={classNames(classes.inline, "my-Button-profile")}
                         variant="contained"
                         color="primary"
-                        className={classes.inline}
+
                     >
                         Отправить
                     </Button>

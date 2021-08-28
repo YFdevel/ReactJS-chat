@@ -1,9 +1,9 @@
 import React from "react";
-import "./App.css";
-import ClosePopup from "./img/close.svg";
+import "../App.css";
+import ClosePopup from "../img/close.svg";
 import {ButtonBase, createStyles, FormLabel, Input, makeStyles} from "@material-ui/core";
-
 import Button from "@material-ui/core/Button";
+import classNames from "classnames";
 
 
 const useStyles = makeStyles((theme) => createStyles({
@@ -34,14 +34,13 @@ export default function Popup(props) {
                         <img src={ClosePopup} style={{width: "30px", height: "30px"}}/>
                     </ButtonBase></div>
 
-                <form className="form-popup" style={{display: "flex", flexDirection: "column", padding: "10px"}}
+                <form style={{display: "flex", flexDirection: "column", padding: "10px"}}
                       onSubmit={props.addNewUserToChatList}
 
                 >
 
                     <Input
-                        style={{width: "100%", color: "darkblue", minHeight: "40px", marginTop: "20px"}}
-                        className={classes.root}
+                        className={classNames(classes.root, "my-Input")}
                         placeholder="Введите ваше никнейм"
                         required={true}
                         onChange={props.changePopupNickName}
@@ -49,8 +48,7 @@ export default function Popup(props) {
 
                     />
                     <Input
-                        style={{width: "100%", color: "darkblue", minHeight: "40px", marginTop: "20px"}}
-                        className={classes.root}
+                        className={classNames(classes.root, "my-Input")}
                         placeholder="Введите ваше имя"
                         required={true}
                         onChange={props.changePopupName}
@@ -59,22 +57,12 @@ export default function Popup(props) {
                     />
                     <Button
                         type="submit"
-                        style={{margin: '20px 0', color: "darkblue"}}
                         variant="contained"
-                        color="primary"
-                        className={classes.root}
+                        className={classNames(classes.root, "my-Button-popup")}
                     >
                         Отправить
                     </Button>
-                    <Button
-                        type="reset"
-                        style={{margin: '20px 0', color: "indianred"}}
-                        variant="contained"
-                        color="secondary"
-                        className={classes.root}
-                    >
-                        Очистить
-                    </Button>
+
                 </form>
             </div>
 

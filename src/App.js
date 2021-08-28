@@ -3,9 +3,9 @@ import {
     ThemeProvider, createTheme
 } from "@material-ui/core/styles";
 import './App.css';
-import Router from "./Router";
+import Router from "./Components/Router";
 import {Provider} from "react-redux";
-import {profile_store} from "./store/profile_store";
+import {store} from "./store/store";
 
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
 
 
     return (
-        <Provider store={profile_store}>
+        <Provider store={store}>
         <ThemeProvider theme={theme}>
             <div className="App">
                 <div className="block-info">

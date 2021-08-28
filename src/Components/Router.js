@@ -7,10 +7,12 @@ import {
 } from 'react-router-dom';
 import Profile from "./Profile";
 import Main from "./Main";
-import Commun from "./Commun";
+import AllChats from "./AllChats";
+
 
 
 function Router() {
+
 
     return (
         <BrowserRouter>
@@ -35,8 +37,11 @@ function Router() {
                 <Route exact path="/profile">
                     <Profile/>
                 </Route>
-                <Route path="/chats">
-                    <Commun/>
+                <Route exact path="/chats">
+                    <AllChats/>
+                </Route>
+                <Route exact path="/chats/:id">
+                   <AllChats/>
                 </Route>
                 <Route exact path="/">
                     <Main/>
