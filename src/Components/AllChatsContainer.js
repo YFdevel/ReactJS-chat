@@ -1,11 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
-import {addChat, deleteChat} from "../store/actions/chats";
+import {addChatsWithThunk, deleteChat} from "../store/actions/chats";
 
-import {
-    useRouteMatch,
-    useParams,
-} from 'react-router-dom';
 import {ButtonBase, Fab} from "@material-ui/core";
 import Messages from "./Messages";
 import Popup from "./Popup";
@@ -14,7 +10,8 @@ import {deleteMessage} from "../store/actions/messages";
 import AllChats from "./AllChats";
 import {useStyles} from "../ThemeStyles";
 import FormContainer from "./FormContainer";
-
+import firebase from "firebase";
+import {useParams, useRouteMatch} from "react-router-dom/cjs/react-router-dom";
 
 
 function AllChatsContainer() {
@@ -22,6 +19,7 @@ function AllChatsContainer() {
     const [newUserNickName, setNewUserNickName] = useState();
     const [newUserName, setNewUserName] = useState();
     const [isChangeTheme, setIsChangeTheme] = useState(false);
+    const [isShowPopup, setIsShowPopup] = useState(false);
     const popupRef = useRef(null);
     const inputTextRef = useRef(null);
     const classes = useStyles();
@@ -32,17 +30,19 @@ function AllChatsContainer() {
     const {chatsList} = useSelector(getChatsList, shallowEqual);
     const dispatch = useDispatch();
 
-    const isChatExists = chatsList.find(item => item.id === params.id)
 
     const chooseAuthor = (item) => {
         setAuthor(item.name)
+
     }
 
     const closePopup = () => {
-        popupRef.current.style.display = "none";
+        setIsShowPopup(false)
+
     }
     const addUserShow = () => {
-        popupRef.current.style.display = "block";
+        setIsShowPopup(true)
+
     }
     const changePopupNickName = (e) => {
         setNewUserNickName(e.target.value);
@@ -57,33 +57,34 @@ function AllChatsContainer() {
     }
     const addNewUserToChatList = (e) => {
         e.preventDefault();
-        let isNickName = chatsList.some(item =>
-            newUserNickName === item.id);
-        if (isNickName === true) {
-            alert("Такой никнейм уже существует");
-            return null;
-        } else {
-            dispatch(addChat(newUserNickName, newUserName));
-        }
-        e.target.reset()
 
+        const db = firebase.database();
+        const newChat = db.ref("chatList");
+
+        newChat.orderByKey().equalTo(newUserNickName).limitToFirst(1).once("value", snapshot => {
+                if (snapshot.exists()) {
+                    alert("Такой никнейм уже существует");
+                    return;
+                }
+                dispatch(addChatsWithThunk(newUserNickName, newUserName))
+            }
+        ).catch((error) => error.message)
+
+        e.target.reset()
+        setIsShowPopup(false)
     }
+
     const deleteUserFromChatList = (chat) => {
+        const db = firebase.database();
+        const chatDelete = db.ref("chatList");
+        const messagesDelete = db.ref("messages");
+
+        chatDelete.child(chat).remove().catch((error) => error.message);
+        messagesDelete.child(chat).remove().catch((error) => error.message);
         dispatch(deleteChat(chat))
         dispatch(deleteMessage(chat))
-
     }
 
-    React.useEffect(() => {
-        inputTextRef.current?.focus();
-
-        if (params.id && !isChatExists)
-            addUserShow()
-        else if (params.id && isChatExists)
-            setAuthor(chatsList.find(item => item.id === params.id).name)
-
-
-    }, [params.id,isChatExists,chatsList]);
 
 
     return (
@@ -93,17 +94,18 @@ function AllChatsContainer() {
                 <div className="window-chats">
                     <AllChats classes={classes} match={match} params={params}
                               deleteUserFromChatList={deleteUserFromChatList}
-                              chooseAuthor={chooseAuthor} chatsList={chatsList}/>
+                              chooseAuthor={chooseAuthor} chatsList={chatsList}
+                    />
 
                     <Popup popupRef={popupRef}
                            addNewUserToChatList={addNewUserToChatList}
                            changePopupName={changePopupName}
                            changePopupNickName={changePopupNickName}
-                           closePopup={closePopup}
+                           closePopup={closePopup} isShowPopup={isShowPopup}
                     />
                     <Fab color="secondary" aria-label="add" style={{
                         fontSize: "20px",
-                        position: "fixed", right: "30px", top: "30%"
+                        position: "fixed", right: "10%", top: "40%"
                     }}
                          onClick={addUserShow}
                     >+
@@ -112,7 +114,8 @@ function AllChatsContainer() {
 
                         <Messages params={params} author={author}/>
                         <FormContainer params={params} author={author} inputTextRef={inputTextRef}
-                              isChatExists={isChatExists}/>
+
+                        />
                     </div>
                 </div>
             </div>

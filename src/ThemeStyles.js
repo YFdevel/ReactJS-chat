@@ -32,7 +32,8 @@ export const useStyles = makeStyles((theme) => createStyles({
         padding: "5px 30px",
         color: "darkblue",
         borderRadius: "20px",
-        background: theme.palette.secondary.background
+        background: theme.palette.secondary.background,
+        marginTop:"20px"
     }
 
 }));

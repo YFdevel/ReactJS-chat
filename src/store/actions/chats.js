@@ -1,46 +1,82 @@
-export const CHANGE_ID = "CHATS::CHANGE_ID";
-export const CHANGE_NAME = "CHATS::CHANGE_NAME";
+
+import firebase from "firebase";
+
 export const ADD_CHAT = "CHATS::ADD_CHAT";
 export const DELETE_CHAT = "CHATS::DELETE_CHAT";
+export const INITIAL_LOAD_CHATS = "CHATS::INITIAL_LOAD_CHATS";
 
-export const changeId = (id) => {
+
+
+export const initialLoadChats = (chatsList) => {
+
     return {
-        type: CHANGE_ID,
+        type: INITIAL_LOAD_CHATS,
         payload: {
-            id
+            chatsList
         }
-
     }
-
 }
-export const changeName = (name) => {
-    return {
-        type: CHANGE_NAME,
-        payload: {
-            name
-        }
 
-    }
 
-}
-export const addChat = (id, name) => {
+
+export const addChat = (chat) => {
     return {
         type: ADD_CHAT,
         payload: {
-            id,
-            name
+           chat
         }
-
     }
+
+
 }
-export const deleteChat = (id, name) => {
+export const deleteChat = (chatId) => {
     return {
         type: DELETE_CHAT,
         payload: {
-            id,
-            name
+            chatId
         }
 
     }
 }
 
+export const addChatsWithThunk = ((chatId, name) => (dispatch, getState) => {
+
+        const db = firebase.database();
+        const chat = db.ref("chatList");
+
+        chat.child(chatId).push({
+            id: chatId,
+            name: name
+        });
+
+    }
+
+);
+export const preloadChatsWithThunk = () => (dispatch, getState) => {
+    const db = firebase.database();
+    const chats = [];
+    const chatsDatabase = db.ref("chatList");
+    chatsDatabase.get().then(
+        (snapshot) => {
+            snapshot.forEach((snap) => {
+                    chats.push(snap.val());
+
+                }
+            )
+            dispatch(initialLoadChats(chats))
+        }
+    )
+
+}
+
+export const onSubscribeToChatsChanges = () => (dispatch, getState) => {
+
+    const db = firebase.database();
+    const chat = db.ref("chatList");
+
+
+    chat.on("child_added", (snapshot) => {
+        dispatch(addChat(snapshot.val()))
+    })
+
+}
