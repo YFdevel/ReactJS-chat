@@ -36,7 +36,7 @@ const chatsReducer = (state = initialState, action) => {
         case DELETE_CHAT:
 
             return{
-           chatsList:state.chatsList.filter((item)=>item.id!==action.payload.id)
+                chatsList:state.chatsList.filter((item)=>item.id!==action.payload.id)
             }
 
         default:
